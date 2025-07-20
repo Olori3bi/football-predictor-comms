@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Football Score Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Football Score Predictor</h1>
+    <label>Home Team ID:</label>
+    <input id="homeTeam" type="number"><br>
+    <label>Away Team ID:</label>
+    <input id="awayTeam" type="number"><br>
+    <button onclick="predict()">Predict Result</button>
+    <p id="result"></p>
+    <script>
+        async function predict() {
+            const home = document.getElementById("homeTeam").value;
+            const away = document.getElementById("awayTeam").value;
+            const res = await fetch('YOUR_BACKEND_URL/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ home_team: parseInt(home), away_team: parseInt(away) })
+            });
+            const data = await res.json();
+            document.getElementById("result").innerText = "Predicted: " + data.prediction;
+        }
+    </script>
+</body>
+</html>
